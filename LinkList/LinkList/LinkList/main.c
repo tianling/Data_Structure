@@ -29,11 +29,12 @@ int tableList();
 Link LinkListStart(int startData[]);
 void LinkPrint(Link startNode);
 int NodeFind(int num,Link startNode);
+int NodeDelete(int num,Link startNode);
 
 
 int main()
 {
-    int choose,num,find,findData;
+    int choose,num,find,findData,delete;
     int StartArray[5] = {5,7,8,9,2};
     Link startNode;
     
@@ -43,15 +44,35 @@ int main()
         case 1:
             LinkPrint(startNode);
             break;
+            
         case 2:
             printf("请输入需要查找的结点编号");
             scanf("%d",&num);
+            
             find = NodeFind(num, startNode);
+            
             if(find!=1){
                 findData = find;
                 printf("%d",findData);
             }else
                 printf("该节点不存在！");
+            
+            break;
+            
+        case 3:
+            printf("请输入需要删除的结点编号");
+            scanf("%d",&num);
+            
+            delete = NodeDelete(num, startNode);
+            if(delete == 0){
+                printf("删除成功！\n");
+                //LinkPrint(startNode);
+                
+            }else{
+                printf("删除失败，该节点不存在!");
+            }
+            
+            break;
             
     }
     main();
@@ -67,6 +88,7 @@ int tableList(){
     printf("**************Welcome,It's Design by tianling******************");
     printf("******************************1.输出链表************************");
     printf("******************************2.查找结点************************");
+    printf("******************************3.删除结点************************");
     
     scanf("%d",&choose);
     return choose;//返回选择的操作编号
@@ -74,7 +96,7 @@ int tableList(){
 }
 
 /*
- **链表初始化
+ **生成链表并且初始化赋值
  */
 Link LinkListStart(int startData[]){
     int i;
@@ -130,5 +152,33 @@ int NodeFind(int num,Link startNode){
     else
         return node->data;
     
+    
+}
+
+
+/*
+ **删除结点
+ */
+int NodeDelete(int num,Link startNode){
+    int check;
+    Link *node,*childNode;
+    
+    node = &startNode;
+    check = 1;
+    
+    while(node && check<num){
+        node = node->next;
+        check++;
+    }
+    
+    if(!node || check>num)
+        return ERROR;
+    
+    childNode = node->next;//获取该节点后继结点
+    node->next = childNode->next;//将后继结点的后继赋值给该结点的后继
+    node->data = childNode->data;//将后继结点的数据赋值给该节点的后继
+    free(childNode);//释放结点，让系统回收内存
+    LinkPrint(startNode);
+    return OK;
     
 }
