@@ -30,13 +30,14 @@ Link LinkListStart(int startData[]);
 void LinkPrint(Link startNode);
 int NodeFind(int num,Link startNode);
 int NodeDelete(int num,Link startNode);
+int NodeInsert(int num,Link startNode,Link insertNode);
 
 
 int main()
 {
-    int choose,num,find,findData,delete;
+    int choose,num,find,findData,delete,data,Insert;
     int StartArray[5] = {5,7,8,9,2};
-    Link startNode;
+    Link startNode,InsertNode;
     
     startNode =  LinkListStart(StartArray);
     choose = tableList();
@@ -74,6 +75,25 @@ int main()
             
             break;
             
+        case 4:
+            printf("请输入插入数值");
+            scanf("%d",&data);
+            printf("请输入需要插入的结点编号");
+            scanf("%d",&num);
+            
+            InsertNode = *(Link*)malloc(sizeof(Link));
+            InsertNode.data = data;
+            Insert = NodeInsert(num, startNode, InsertNode);
+            if(Insert == 0)
+                printf("插入成功！");
+            else{
+                printf("插入失败，该节点不存在！");
+            }
+            
+            break;
+            
+        case 5:
+            exit(0);
     }
     main();
 }
@@ -89,6 +109,8 @@ int tableList(){
     printf("******************************1.输出链表************************");
     printf("******************************2.查找结点************************");
     printf("******************************3.删除结点************************");
+    printf("******************************4.插入结点************************");
+    printf("******************************5.退出****************************");
     
     scanf("%d",&choose);
     return choose;//返回选择的操作编号
@@ -178,6 +200,36 @@ int NodeDelete(int num,Link startNode){
     node->next = childNode->next;//将后继结点的后继赋值给该结点的后继
     node->data = childNode->data;//将后继结点的数据赋值给该节点的后继
     free(childNode);//释放结点，让系统回收内存
+    LinkPrint(startNode);
+    return OK;
+    
+}
+
+
+
+/*
+ **插入结点
+ */
+int NodeInsert(int num,Link startNode,Link insertNode){
+    int check;
+    Link *node,*childNode;
+    
+    node = &startNode;
+    check = 1;
+    
+    while(node && check<num){
+        node = node->next;
+        check++;
+    }
+    
+    if(!node || check>num){
+        return ERROR;
+    }
+    
+    childNode = node->next;
+    insertNode.next = childNode;
+    node->next = &insertNode;
+    free(childNode);
     LinkPrint(startNode);
     return OK;
     
