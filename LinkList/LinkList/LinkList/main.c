@@ -31,11 +31,12 @@ void LinkPrint(Link startNode);
 int NodeFind(int num,Link startNode);
 int NodeDelete(int num,Link startNode);
 int NodeInsert(int num,Link startNode,Link insertNode);
+int ListClear(Link startNode);
 
 
 int main()
 {
-    int choose,num,find,findData,delete,data,Insert;
+    int choose,num,find,findData,delete,data,Insert,clear;
     int StartArray[5] = {5,7,8,9,2};
     Link startNode,InsertNode;
     
@@ -93,7 +94,14 @@ int main()
             break;
             
         case 5:
+            clear = ListClear(startNode);
+            if(clear == 0)
+                printf("删除成功!");
+            break;
+            
+        case 6:
             exit(0);
+           
     }
     main();
 }
@@ -110,7 +118,8 @@ int tableList(){
     printf("******************************2.查找结点************************");
     printf("******************************3.删除结点************************");
     printf("******************************4.插入结点************************");
-    printf("******************************5.退出****************************");
+    printf("******************************5.整表删除************************");
+    printf("******************************6.退出****************************");
     
     scanf("%d",&choose);
     return choose;//返回选择的操作编号
@@ -122,17 +131,16 @@ int tableList(){
  */
 Link LinkListStart(int startData[]){
     int i;
-    Link *startNode,*childNode;
-    Link *Node = (Link*)malloc(sizeof(Link));
-    startNode = Node;
+    Link *startNode = (Link*)malloc(sizeof(Link)),*Node;
+
+    startNode->next = NULL;//建立一个带头结点的单链表
 
     for(i=0;i<5;i++){
-        Node->data = startData[i];
-        childNode = (Link*)malloc(sizeof(Link));
-        Node->next = childNode;
-        Node = childNode;
+        Node = (Link*)malloc(sizeof(Link));//生成新结点
+        Node->data = startData[i];//为结点赋值
+        Node->next = startNode->next;
+        startNode->next = Node;//插入到表头
     }
-    Node->next = NULL;//尾结点的next指针赋空值
     
     return *startNode;
 }
@@ -145,6 +153,7 @@ void LinkPrint(Link startNode){
     Link *Node;
     
     Node = &startNode;
+    Node = Node->next;
     while(Node){
         printf("%d",Node->data);
         Node = Node->next;
@@ -161,6 +170,7 @@ int NodeFind(int num,Link startNode){
     Link *node;
     
     node = &startNode;//让node指向初始结点
+    node = node->next;
     check = 1;//check作为计数参考变量
     
     while(node && check<num){
@@ -186,6 +196,7 @@ int NodeDelete(int num,Link startNode){
     Link *node,*childNode;
     
     node = &startNode;
+    node = node->next;
     check = 1;
     
     while(node && check<num){
@@ -233,4 +244,24 @@ int NodeInsert(int num,Link startNode,Link insertNode){
     LinkPrint(startNode);
     return OK;
     
+}
+
+
+
+/*
+ **链表整表删除
+ */
+int ListClear(Link startNode){
+    Link *node,*childnode;
+    
+    node = &startNode;
+    node = node->next;
+    while(node){//没到表尾
+        childnode = node->next;//获得下一个结点
+        free(node);//释放结点内存空间
+        node = childnode;//将下一个结点赋值
+    }
+
+    //LinkPrint(startNode);
+    return OK;
 }
