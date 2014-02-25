@@ -7,12 +7,17 @@
 //  实现栈的生成，插入，删除，输出操作
 
 #include <stdio.h>
+#define MaxSize 10
+typedef int status;
 
-int main(int argc, const char * argv[])
+struct{
+    int data[MaxSize];
+    int top;
+}SqStack;
+
+int main()
 {
+    
 
-    // insert code here...
-    printf("Hello, World!\n");
-    return 0;
 }
 
