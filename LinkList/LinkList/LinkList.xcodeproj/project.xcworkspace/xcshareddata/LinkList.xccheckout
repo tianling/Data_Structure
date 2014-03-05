@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>FA3F47EF-2BF8-46C9-8C4C-1CB481FAD80F</string>
+	<string>3AA6CCE9-F3F3-4A0F-8EE8-336E9674082D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>LinkList</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>9E5B681D-AB3A-4608-9A8D-D9B8A677D4F1</key>
+		<key>DD79437C-09D2-490D-A671-7DB0B4C4C867</key>
 		<string>https://github.com/tianling/Data_Structure.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>LinkList/LinkList/LinkList.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>9E5B681D-AB3A-4608-9A8D-D9B8A677D4F1</key>
+		<key>DD79437C-09D2-490D-A671-7DB0B4C4C867</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>9E5B681D-AB3A-4608-9A8D-D9B8A677D4F1</string>
+	<string>DD79437C-09D2-490D-A671-7DB0B4C4C867</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>9E5B681D-AB3A-4608-9A8D-D9B8A677D4F1</string>
+			<string>DD79437C-09D2-490D-A671-7DB0B4C4C867</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Data_Structure</string>
 		</dict>
