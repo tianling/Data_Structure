@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>341CB5DF-D9E6-4E84-965A-FFF356E5548A</string>
+	<string>B31B853A-8122-4BBB-9D70-3BE25F2CFFF5</string>
 	<key>IDESourceControlProjectName</key>
-	<string>LinkList</string>
+	<string>word_frequency_statistic</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>28471626-9E8B-4245-BBFF-5C1854B8C97A</key>
 		<string>https://github.com/tianling/Data_Structure.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>LinkList/LinkList/LinkList.xcodeproj/project.xcworkspace</string>
+	<string>word_frequency_statistic/word_frequency_statistic/word_frequency_statistic.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>28471626-9E8B-4245-BBFF-5C1854B8C97A</key>
