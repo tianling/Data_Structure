@@ -34,7 +34,7 @@ wordNode *headNode = NULL;//定义链表头指针
 wordNode *wordSearch(char *word,int *num);
 status wordCount(char *word,int *num);
 void printCountList(int *num);
-status quickSort(int *num);
+status quickSort(wordNode *headNode,wordNode *end);
 
 
 status main(int argc,char *argv[])
@@ -42,7 +42,7 @@ status main(int argc,char *argv[])
     char temp[WORD_LENGTH];//定义用以临时存放单词的数组
     FILE *file;
     int count,articleWordNum = 0;//定义统计结点个数的变量
-    int *num = &articleWordNum;
+    int *num = &articleWordNum,choose;
     
     /*
      **读取文件
@@ -61,6 +61,18 @@ status main(int argc,char *argv[])
     fclose(file);//关闭文件
     
     printCountList(num);
+    
+    printf("*********************请选择*********************");
+    printf("************1. 输出词频最高的10个词***************");
+    printf("************2. 退出*****************************");
+    
+    scanf("%d",&choose);
+    if(choose == 1){
+        quickSort(headNode,NULL);
+        printCountList(num);
+
+    }else
+        exit(0);
     
     return 0;
     
@@ -134,10 +146,64 @@ void printCountList(int *num){
     }else{
         wordNode *preNode = headNode;
         printf("总词量 %d \n",*num);
+        
         while(preNode != NULL){
             printf("%s 出现次数 %d\n",preNode->word,preNode->time);
             preNode = preNode->next;
         }
     }
     
+}
+
+
+/*
+ **对词频统计结果进行快速排序
+ */
+status quickSort(wordNode *headNode,wordNode *end){
+    wordNode *right;
+    wordNode **left_walk,**right_walk;
+    wordNode *pivot,*old;
+    int count,left_count,right_count;
+    
+    if(headNode == end)
+        return ERROR;
+    
+    do{
+        pivot = headNode;//定义头结点为排序基准点
+        left_walk = &headNode;
+        right_walk = &right;
+        left_count = right_count = 0;
+        
+        for(old = headNode;old != end;old = old->next){
+            if(old->time < pivot->time){//小于基准则加入到左边子链表中，继续比较
+                ++left_count;
+                *left_walk = old;//把该节点加入到左边链表中
+                left_walk = &(old->next);
+                
+            }else{//大于等于基准则加入到右边字链表中，继续比较
+                ++right_count;
+                *right_walk = old;
+                right_walk = &(old->next);
+                
+            }
+        }
+        //合并链表
+        *right_walk = end;//结束右链表
+        *left_walk = pivot;
+        pivot->next = right;
+        
+        if(left_walk > right_walk){
+            quickSort(pivot->next,end);
+            end = pivot;
+            count = left_count;
+        }else{
+            quickSort(headNode,pivot);
+            headNode = pivot->next;
+            count = right_count;
+        }
+        
+        
+    }while(count>1);
+    
+    return 0;
 }
