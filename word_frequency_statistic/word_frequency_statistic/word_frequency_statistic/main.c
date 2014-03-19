@@ -34,8 +34,11 @@ wordNode *headNode = NULL;//定义链表头指针
 wordNode *wordSearch(char *word,int *num);
 status wordCount(char *word,int *num);
 void printCountList(int *num);
-status quickSort(wordNode *headNode,wordNode *end);
-
+void PrintFirstTenTimes();
+void mergeSort(wordNode **head);
+void FrontBackSplit(wordNode *head,wordNode **pre,wordNode **next);
+void wordJob(char word[]);
+wordNode *SortedMerge(wordNode *pre,wordNode *next);
 
 status main(int argc,char *argv[])
 {
@@ -54,7 +57,7 @@ status main(int argc,char *argv[])
     }
     
     while((fscanf(file,"%s",temp))!= EOF){
-        
+        wordJob(temp);
         count = wordCount(temp,num);
     }
     
@@ -62,14 +65,14 @@ status main(int argc,char *argv[])
     
     printCountList(num);
     
-    printf("*********************请选择*********************");
-    printf("************1. 输出词频最高的10个词***************");
-    printf("************2. 退出*****************************");
+    printf("***********请选择***********\n");
+    printf("*****1. 输出词频最高的10个词**\n");
+    printf("*****2. 退出****************\n");
     
     scanf("%d",&choose);
     if(choose == 1){
-        quickSort(headNode,NULL);
-        printCountList(num);
+        mergeSort(&headNode);
+        PrintFirstTenTimes();
 
     }else
         exit(0);
@@ -157,53 +160,124 @@ void printCountList(int *num){
 
 
 /*
- **对词频统计结果进行快速排序
+ **打印词频最高的10个词
  */
-status quickSort(wordNode *headNode,wordNode *end){
-    wordNode *right;
-    wordNode **left_walk,**right_walk;
-    wordNode *pivot,*old;
-    int count,left_count,right_count;
-    
-    if(headNode == end)
-        return ERROR;
-    
-    do{
-        pivot = headNode;//定义头结点为排序基准点
-        left_walk = &headNode;
-        right_walk = &right;
-        left_count = right_count = 0;
+void PrintFirstTenTimes(){
+    if(headNode == NULL){
+        printf("该文件无内容!");
         
-        for(old = headNode;old != end;old = old->next){
-            if(old->time < pivot->time){//小于基准则加入到左边子链表中，继续比较
-                ++left_count;
-                *left_walk = old;//把该节点加入到左边链表中
-                left_walk = &(old->next);
-                
-            }else{//大于等于基准则加入到右边字链表中，继续比较
-                ++right_count;
-                *right_walk = old;
-                right_walk = &(old->next);
-                
+    }else{
+        wordNode *preNode = headNode;
+        int i = 0;
+        printf("出现次数最多的10个词如下: \n");
+        
+        while (preNode != NULL && i<=10) {
+            printf("%s 出现次数 %d\n",preNode->word,preNode->time);
+            preNode = preNode->next;
+            i++;
+
+        }
+    }
+}
+
+
+/*
+ **对词频统计结果进行归并排序
+ */
+void mergeSort(wordNode **headnode){
+    wordNode *pre,*next,*head;
+    head = *headnode;
+    
+    //若链表长度为0或1则停止排序
+    if(head == NULL || head->next == NULL){
+        return;
+    }
+    
+    FrontBackSplit(head,&pre,&next);
+    
+    mergeSort(&pre);
+    mergeSort(&next);
+    
+    *headnode = SortedMerge(pre,next);
+    
+}
+
+
+/*
+ **将链表进行分组
+ */
+void FrontBackSplit(wordNode *source,wordNode **pre,wordNode **next){
+    wordNode *fast;
+    wordNode *slow;
+    
+    if(source == NULL || source->next == NULL){
+        *pre = source;
+        *next = NULL;
+    }else{
+        slow = source;
+        fast = source->next;
+        
+        while(fast != NULL){
+            fast = fast->next;
+            
+            if(fast != NULL){
+                slow = slow->next;
+                fast = fast->next;
             }
         }
-        //合并链表
-        *right_walk = end;//结束右链表
-        *left_walk = pivot;
-        pivot->next = right;
-        
-        if(left_walk > right_walk){
-            quickSort(pivot->next,end);
-            end = pivot;
-            count = left_count;
-        }else{
-            quickSort(headNode,pivot);
-            headNode = pivot->next;
-            count = right_count;
-        }
-        
-        
-    }while(count>1);
+        *pre = source;
+        *next = slow->next;
+        slow->next = NULL;
+    }
+}
+
+
+/*
+ **根据排序结果更换头结点
+ */
+wordNode *SortedMerge(wordNode *pre,wordNode *next){
+    wordNode *result = NULL;
     
-    return 0;
+    if(pre == NULL)
+        return next;
+    else if(next == NULL)
+        return pre;
+    
+    if(pre->time >= next->time){
+        result = pre;
+        result->next = SortedMerge(pre->next,next);
+        
+    }else{
+        result = next;
+        result->next = SortedMerge(pre,next->next);
+    }
+    return result;
+}
+
+
+/*
+ **处理大写字母及特殊字符
+ */
+void wordJob(char word[]){
+    int i,k;
+    char *specialChar = ",.;:'?!><+=|*&^%$#@\"";//定义特殊字符集
+    
+    for(i = 0;i<strlen(word);i++){
+        
+        if(word[i]>='A'&& word[i]<='Z'){
+            word[i] += 32;
+        }
+        for(k = 0;k<strlen(specialChar);k++){
+            
+            if(word[i] == specialChar[k]){
+                
+                while(i<strlen(word)){
+                    word[i] = word[i+1];
+                    i++;
+                }
+               
+            }
+        }
+    }
+    
 }
