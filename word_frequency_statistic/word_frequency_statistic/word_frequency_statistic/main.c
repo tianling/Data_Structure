@@ -39,6 +39,7 @@ void mergeSort(wordNode **head);
 void FrontBackSplit(wordNode *head,wordNode **pre,wordNode **next);
 void wordJob(char word[]);
 wordNode *SortedMerge(wordNode *pre,wordNode *next);
+void release();
 
 status main(int argc,char *argv[])
 {
@@ -74,9 +75,12 @@ status main(int argc,char *argv[])
         mergeSort(&headNode);
         PrintFirstTenTimes();
 
-    }else
+    }else{
+        release();
         exit(0);
+    }
     
+    release();
     return 0;
     
     
@@ -263,10 +267,11 @@ void wordJob(char word[]){
     char *specialChar = ",.;:'?!><+=|*&^%$#@\"";//定义特殊字符集
     
     for(i = 0;i<strlen(word);i++){
-        
+        //筛选并将字符串中的大写字母转化为小写字母
         if(word[i]>='A'&& word[i]<='Z'){
             word[i] += 32;
         }
+        //筛选并去除字符串中的特殊字符
         for(k = 0;k<strlen(specialChar);k++){
             
             if(word[i] == specialChar[k]){
@@ -280,4 +285,21 @@ void wordJob(char word[]){
         }
     }
     
+}
+
+
+/*
+ **释放所有结点内存
+ */
+void release(){
+    if(headNode == NULL)
+        return;
+    
+    wordNode *pre = headNode;
+    while(pre != NULL){
+        headNode = pre->next;
+        free(pre);
+        pre = headNode;
+        
+    }
 }
