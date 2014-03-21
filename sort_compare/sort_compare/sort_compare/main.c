@@ -21,22 +21,25 @@ typedef struct data{
     int length;
 }dataArray;
 
+typedef int status;
 
 /*
  **函数声明
  */
 void bubbleSort(dataArray *array);
 void printArray(dataArray *array);
+status tableList();
 
-int main(int argc, const char * argv[])
+status main(int argc, const char * argv[])
 {
-    int i = 0,temp;
+    int i = 0,temp,choose;
     FILE *file;
     dataArray array;
     array.length = 0;
     clock_t start_time,end_time;
     double work_time;
     
+    //从文本中读取排序样本
     if((file = fopen("/Users/tianling/Documents/Data_Structure/sort_compare/sort_compare/data.txt","r")) == NULL){
         printf("文件读取失败！");
         return 1;
@@ -47,16 +50,24 @@ int main(int argc, const char * argv[])
         i++;
         array.length++;
     }
-    
+    printf("初始数据：\n");
     printArray(&array);
     
-    start_time = clock();
-    bubbleSort(&array);
-    end_time = clock();
+    choose = tableList();
+    switch(choose){
+        case 1:
+            start_time = clock();
+            bubbleSort(&array);
+            end_time = clock();
+            
+            work_time = (double)end_time - start_time;
+            printArray(&array);
+            printf("运行时间 %lf ms",work_time);
+            break;
+
+            
+    }
     
-    work_time = (double)end_time - start_time;
-    printArray(&array);
-    printf("运行时间 %lf ms",work_time);
     return 0;
 }
 
@@ -91,4 +102,18 @@ void printArray(dataArray *array){
         printf("%d ",array->dataArray[i]);
     }
     printf(" \n");
+}
+
+
+/*
+ **操作菜单
+ */
+status tableList(){
+    int choose;
+    
+    printf("*******请选择排序类型*******\n");
+    printf("*******1.冒泡法排序********\n");
+    
+    scanf("%d",&choose);
+    return choose;
 }
