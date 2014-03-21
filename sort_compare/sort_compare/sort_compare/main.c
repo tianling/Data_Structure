@@ -28,6 +28,7 @@ typedef int status;
  */
 void bubbleSort(dataArray *array);
 void printArray(dataArray *array);
+void selectSort(dataArray *array);
 status tableList();
 
 status main(int argc, const char * argv[])
@@ -54,19 +55,37 @@ status main(int argc, const char * argv[])
     printArray(&array);
     
     choose = tableList();
-    switch(choose){
-        case 1:
-            start_time = clock();
-            bubbleSort(&array);
-            end_time = clock();
-            
-            work_time = (double)end_time - start_time;
-            printArray(&array);
-            printf("运行时间 %lf ms",work_time);
-            break;
-
-            
+    while (choose != 0) {
+        switch(choose){
+            case 1:
+                start_time = clock();
+                bubbleSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms",work_time);
+                break;
+                
+            case 2:
+                start_time = clock();
+                selectSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms",work_time);
+                break;
+                
+            default:
+                exit(0);
+                break;
+                
+        }
+        
+        choose = tableList();
     }
+
     
     return 0;
 }
@@ -81,7 +100,7 @@ void bubbleSort(dataArray *array){
     for(i = 0;i<array->length;i++){
         for(j = array->length-2;j>=i;j--){
             
-            if(array->dataArray[j]<array->dataArray[j+1]){
+            if(array->dataArray[j]>array->dataArray[j+1]){
                 change = array->dataArray[j];
                 array->dataArray[j] = array->dataArray[j+1];
                 array->dataArray[j+1] = change;
@@ -91,6 +110,28 @@ void bubbleSort(dataArray *array){
     
 }
 
+
+/*
+ **简单选择排序
+ */
+void selectSort(dataArray *array){
+    int i,j,min,change;
+    
+    for(i = 0;i<array->length;i++){
+        min = i;
+        
+        for(j = i+1;j<array->length;j++){
+            if(array->dataArray[min] > array->dataArray[j]){
+                min = j;
+            }
+        }
+        if(i != min){
+            change = array->dataArray[min];
+            array->dataArray[min] = array->dataArray[i];
+            array->dataArray[i] = change;
+        }
+    }
+}
 
 /*
  **打印结果集
@@ -113,6 +154,7 @@ status tableList(){
     
     printf("*******请选择排序类型*******\n");
     printf("*******1.冒泡法排序********\n");
+    printf("*******2.简单选择排序*******\n");
     
     scanf("%d",&choose);
     return choose;
