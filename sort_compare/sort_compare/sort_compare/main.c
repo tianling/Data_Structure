@@ -29,6 +29,7 @@ typedef int status;
 void bubbleSort(dataArray *array);
 void printArray(dataArray *array);
 void selectSort(dataArray *array);
+void insertSort(dataArray *array);
 status tableList();
 
 status main(int argc, const char * argv[])
@@ -64,7 +65,7 @@ status main(int argc, const char * argv[])
                 
                 work_time = (double)end_time - start_time;
                 printArray(&array);
-                printf("运行时间 %lf ms",work_time);
+                printf("运行时间 %lf ms \n",work_time);
                 break;
                 
             case 2:
@@ -74,7 +75,17 @@ status main(int argc, const char * argv[])
                 
                 work_time = (double)end_time - start_time;
                 printArray(&array);
-                printf("运行时间 %lf ms",work_time);
+                printf("运行时间 %lf ms \n",work_time);
+                break;
+                
+            case 3:
+                start_time = clock();
+                insertSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms \n",work_time);
                 break;
                 
             default:
@@ -118,17 +129,40 @@ void selectSort(dataArray *array){
     int i,j,min,change;
     
     for(i = 0;i<array->length;i++){
-        min = i;
+        min = i;//以首元素为第一个基准
         
         for(j = i+1;j<array->length;j++){
             if(array->dataArray[min] > array->dataArray[j]){
+                //若有小于基准的值，则更换基准
                 min = j;
             }
         }
         if(i != min){
+            //若min与i不想等，则说明找到这趟排序的最小值，交换
             change = array->dataArray[min];
             array->dataArray[min] = array->dataArray[i];
             array->dataArray[i] = change;
+        }
+    }
+}
+
+
+/*
+ **直接插入排序
+ */
+void insertSort(dataArray *array){
+    int i,j,temp;//temp为哨兵元素
+    
+    for(i = 1;i<array->length;i++){
+        
+        if(array->dataArray[i]<array->dataArray[i-1]){
+            temp = array->dataArray[i];
+            
+            for(j = i-1;array->dataArray[j]>temp;j--){
+                array->dataArray[j+1] = array->dataArray[j];
+            }
+            
+            array->dataArray[j+1] = temp;
         }
     }
 }
@@ -155,6 +189,7 @@ status tableList(){
     printf("*******请选择排序类型*******\n");
     printf("*******1.冒泡法排序********\n");
     printf("*******2.简单选择排序*******\n");
+    printf("*******3.直接插入排序*******\n");
     
     scanf("%d",&choose);
     return choose;
