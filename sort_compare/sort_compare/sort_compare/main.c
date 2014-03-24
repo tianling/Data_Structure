@@ -30,6 +30,7 @@ void bubbleSort(dataArray *array);
 void printArray(dataArray *array);
 void selectSort(dataArray *array);
 void insertSort(dataArray *array);
+void shellSort(dataArray *array);
 status tableList();
 
 status main(int argc, const char * argv[])
@@ -87,6 +88,17 @@ status main(int argc, const char * argv[])
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
                 break;
+                
+            case 4:
+                start_time = clock();
+                shellSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms \n",work_time);
+                break;
+
                 
             default:
                 exit(0);
@@ -159,12 +171,41 @@ void insertSort(dataArray *array){
             temp = array->dataArray[i];
             
             for(j = i-1;array->dataArray[j]>temp;j--){
-                array->dataArray[j+1] = array->dataArray[j];
+                array->dataArray[j+1] = array->dataArray[j];//记录后移
             }
             
-            array->dataArray[j+1] = temp;
+            array->dataArray[j+1] = temp;//插入到正确位置
         }
     }
+}
+
+
+/*
+ **希尔排序
+ */
+void shellSort(dataArray *array){
+    int i,j,temp;
+    int increment = array->length;
+    
+    do{
+        increment = increment/3+1;//定义增量序列
+        
+        for(i = increment;i<array->length;i++){
+            
+            if(array->dataArray[i] < array->dataArray[i - increment]){
+                temp = array->dataArray[i];//用temp暂存
+                
+                for(j = i-increment;j>=0 && temp < array->dataArray[j];j-=increment){
+                    array->dataArray[j+increment] = array->dataArray[j];//记录后移，寻找插入位置
+                    
+                }
+                array->dataArray[j+increment] = temp;//插入
+                
+            }
+        }
+        
+        
+    }while(increment > 1);
 }
 
 /*
@@ -190,6 +231,7 @@ status tableList(){
     printf("*******1.冒泡法排序********\n");
     printf("*******2.简单选择排序*******\n");
     printf("*******3.直接插入排序*******\n");
+    printf("*******4.希尔排序***********\n");
     
     scanf("%d",&choose);
     return choose;
