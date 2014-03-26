@@ -26,33 +26,27 @@ typedef int status;
 /*
  **函数声明
  */
+void arrayBegin(dataArray *array);
 void bubbleSort(dataArray *array);
 void printArray(dataArray *array);
 void selectSort(dataArray *array);
 void insertSort(dataArray *array);
 void shellSort(dataArray *array);
+void heapSort(dataArray *array);
+void heapAdjust(dataArray *array,int i,int length);
+void mergeSort(dataArray *array,dataArray *temArray,int s,int t);
+void merge(dataArray *array1,dataArray *array2,int i,int m,int n);
+
 status tableList();
 
 status main(int argc, const char * argv[])
 {
-    int i = 0,temp,choose;
-    FILE *file;
+    int choose;
     dataArray array;
-    array.length = 0;
     clock_t start_time,end_time;
     double work_time;
     
-    //从文本中读取排序样本
-    if((file = fopen("/Users/tianling/Documents/Data_Structure/sort_compare/sort_compare/data.txt","r")) == NULL){
-        printf("文件读取失败！");
-        return 1;
-    }
-    
-    while((fscanf(file,"%d",&temp)) != EOF ){
-        array.dataArray[i] = temp;
-        i++;
-        array.length++;
-    }
+    arrayBegin(&array);
     printf("初始数据：\n");
     printArray(&array);
     
@@ -67,6 +61,8 @@ status main(int argc, const char * argv[])
                 work_time = (double)end_time - start_time;
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
+                /*重新构造目标样本*/
+                arrayBegin(&array);
                 break;
                 
             case 2:
@@ -77,6 +73,7 @@ status main(int argc, const char * argv[])
                 work_time = (double)end_time - start_time;
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
                 break;
                 
             case 3:
@@ -87,6 +84,7 @@ status main(int argc, const char * argv[])
                 work_time = (double)end_time - start_time;
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
                 break;
                 
             case 4:
@@ -97,7 +95,31 @@ status main(int argc, const char * argv[])
                 work_time = (double)end_time - start_time;
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
                 break;
+                
+            case 5:
+                start_time = clock();
+                heapSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
+                break;
+                
+            case 6:
+                start_time = clock();
+                mergeSort(&array, &array, 0, 49);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
+                break;
+
 
                 
             default:
@@ -111,6 +133,31 @@ status main(int argc, const char * argv[])
 
     
     return 0;
+}
+
+
+/*
+ **初始化目标序列
+ */
+void arrayBegin(dataArray *array){
+    int i = 0,temp;
+    FILE *file;
+    
+    //从文本中读取排序样本
+    if((file = fopen("/Users/tianling/Documents/Data_Structure/sort_compare/sort_compare/data.txt","r")) == NULL){
+        printf("文件读取失败！");
+        return;
+    }
+    
+    array->length = 0;
+    
+    while((fscanf(file,"%d",&temp)) != EOF ){
+        array->dataArray[i] = temp;
+        i++;
+        array->length++;
+    }
+    
+    fclose(file);
 }
 
 
@@ -208,6 +255,101 @@ void shellSort(dataArray *array){
     }while(increment > 1);
 }
 
+
+/*
+ **堆排序
+ */
+void heapSort(dataArray *array){
+    int i,temp;
+    
+    for(i = array->length/2;i>=0;i--){
+        heapAdjust(array, i, array->length);//将目标处理成一个大頂堆
+    }
+    
+    for(i = array->length-1;i>0;i--){
+        temp = array->dataArray[0];//将堆顶记录和未经交换的子序列中的最后一个序列交换
+        array->dataArray[0] = array->dataArray[i];
+        array->dataArray[i] = temp;
+        
+        heapAdjust(array, 0, i-1);//将剩余序列重新调整为一个大頂堆
+    }
+}
+
+
+/*
+ **将目标处理成大顶堆
+ */
+void heapAdjust(dataArray *array,int i,int length){
+    int temp,j;
+    
+    temp = array->dataArray[i];
+    for(j = 2*i;j<length;j *= 2){//沿关键字较大的孩子结点向下筛选
+        
+        if(j<length && array->dataArray[j]<array->dataArray[j+1]){//j为关键字中较大记录的下标
+            ++j;
+        }
+        if(temp >= array->dataArray[j])
+            break;
+        
+        array->dataArray[i] = array->dataArray[j];
+        i = j;
+    }
+    array->dataArray[i] = temp;
+}
+
+
+/*
+ **归并排序
+ */
+void mergeSort(dataArray *array,dataArray *temArray,int s,int t){
+    int m;
+    dataArray TEMP[MAXSIZE+1];
+    
+    if(s == t){
+        temArray->dataArray[s] = array->dataArray[s];
+    }
+    else{
+        m = (s+t)/2;//将目标序列等分为两个序列
+        mergeSort(array, TEMP, s, m);
+        mergeSort(array, TEMP, m+1, t);
+        
+        merge(TEMP,temArray,s,m,t);
+        
+    }
+    
+    
+}
+
+
+/*
+ **将有序子序列归并为有序结果序列
+ */
+void merge(dataArray *array1,dataArray *array2,int i,int m,int n){
+    int j,k,l;
+    
+    for(j = m+1,k = i;i<=m && j<=n;k++){
+        
+        if(array1->dataArray[i]<array1->dataArray[j]){
+            array2->dataArray[k] = array1->dataArray[i++];
+        }else{
+            array2->dataArray[k] = array1->dataArray[j++];
+        }
+    }
+    
+    if(i<=m){
+        for(l = 0;l<=m-i;l++){
+            array2->dataArray[k+l] = array1->dataArray[i+l];
+        }
+    }
+    
+    if(j<=n){
+        for(l = 0;l<=n-j;l++){
+            array2->dataArray[k+l] = array1->dataArray[j+l];
+        }
+    }
+}
+
+
 /*
  **打印结果集
  */
@@ -232,6 +374,8 @@ status tableList(){
     printf("*******2.简单选择排序*******\n");
     printf("*******3.直接插入排序*******\n");
     printf("*******4.希尔排序***********\n");
+    printf("*******5.堆排序*************\n");
+    printf("*******6.归并排序***********\n");
     
     scanf("%d",&choose);
     return choose;
