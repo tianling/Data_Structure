@@ -36,6 +36,9 @@ void heapSort(dataArray *array);
 void heapAdjust(dataArray *array,int i,int length);
 void mergeSort(dataArray *array,dataArray *temArray,int s,int t);
 void merge(dataArray *array1,dataArray *array2,int i,int m,int n);
+void quickSort(dataArray *array);
+void Qsort(dataArray *array,int low,int high);
+int Partition(dataArray *array,int low,int high);
 
 status tableList();
 
@@ -54,11 +57,11 @@ status main(int argc, const char * argv[])
     while (choose != 0) {
         switch(choose){
             case 1:
-                start_time = clock();
+                start_time = clock();//获取程序开始运算时间
                 bubbleSort(&array);
-                end_time = clock();
+                end_time = clock();//获取程序结束运算时间
                 
-                work_time = (double)end_time - start_time;
+                work_time = (double)end_time - start_time;//计算程序运算时间
                 printArray(&array);
                 printf("运行时间 %lf ms \n",work_time);
                 /*重新构造目标样本*/
@@ -119,7 +122,17 @@ status main(int argc, const char * argv[])
                 printf("运行时间 %lf ms \n",work_time);
                 arrayBegin(&array);
                 break;
-
+                
+            case 7:
+                start_time = clock();
+                quickSort(&array);
+                end_time = clock();
+                
+                work_time = (double)end_time - start_time;
+                printArray(&array);
+                printf("运行时间 %lf ms \n",work_time);
+                arrayBegin(&array);
+                break;
 
                 
             default:
@@ -149,7 +162,7 @@ void arrayBegin(dataArray *array){
         return;
     }
     
-    array->length = 0;
+    array->length = 0;//初始化目标样本长度
     
     while((fscanf(file,"%d",&temp)) != EOF ){
         array->dataArray[i] = temp;
@@ -157,7 +170,7 @@ void arrayBegin(dataArray *array){
         array->length++;
     }
     
-    fclose(file);
+    fclose(file);//关闭文件
 }
 
 
@@ -321,6 +334,7 @@ void mergeSort(dataArray *array,dataArray *temArray,int s,int t){
 }
 
 
+
 /*
  **将有序子序列归并为有序结果序列
  */
@@ -351,6 +365,60 @@ void merge(dataArray *array1,dataArray *array2,int i,int m,int n){
 
 
 /*
+ **快速排序
+ */
+void quickSort(dataArray *array){
+    Qsort(array, 0, array->length-1);
+}
+
+
+/*
+ **对目标样本中的子序列array(low...high)做快速排序
+ */
+void Qsort(dataArray *array,int low,int high){
+    int pivot;
+    
+    if(low<high){
+        pivot = Partition(array, low, high);//将dataArray[low...high]一分为二，并返回枢轴下标
+        
+        Qsort(array, low, pivot-1);//递归对低子表进行排序
+        Qsort(array, pivot+1, high);//递归对高子表进行排序
+   
+    }
+}
+
+
+/*
+ **交换顺序表dataArray中子表的记录，使枢轴记录到位，并返回其所在位置
+ **目标使枢轴两边的元素均不大于（小于）它
+ */
+int Partition(dataArray *array,int low,int high){
+    int pivotKey,temp;
+    
+    pivotKey = array->dataArray[low];//用子表的第一个记录作为枢轴记录
+    
+    while(low<high){//从两端交替向中间扫描
+        
+        while(low<high && array->dataArray[high]>=array->dataArray[pivotKey]){
+            high--;
+        }
+        temp = array->dataArray[high];//将比枢轴小的记录交换到低端
+        array->dataArray[high] = array->dataArray[low];
+        array->dataArray[low] = temp;
+        
+        while(low<high && array->dataArray[low]<=array->dataArray[pivotKey]){
+            low++;
+        }
+        temp = array->dataArray[high];//将比枢轴大的记录交换到高端
+        array->dataArray[high] = array->dataArray[low];
+        array->dataArray[low] = temp;
+        
+    }
+    
+    return low;//返回枢轴所在的位置
+}
+
+/*
  **打印结果集
  */
 void printArray(dataArray *array){
@@ -376,6 +444,7 @@ status tableList(){
     printf("*******4.希尔排序***********\n");
     printf("*******5.堆排序*************\n");
     printf("*******6.归并排序***********\n");
+    printf("*******7.快速排序***********\n");
     
     scanf("%d",&choose);
     return choose;
