@@ -445,6 +445,7 @@ status tableList(){
     printf("*******5.堆排序*************\n");
     printf("*******6.归并排序***********\n");
     printf("*******7.快速排序***********\n");
+    printf("*******0.退出**************\n");
     
     scanf("%d",&choose);
     return choose;
