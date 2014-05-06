@@ -5,20 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>3C5E1372-E83F-4E10-A397-847C4D62AD7E</string>
+	<string>3370FE28-748B-4B6B-92AC-F05F65CB122C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>word_frequency_statistic</string>
+	<string>TheMaxChild_String</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>20679D74-18E5-46F1-B562-4D2FFE779FA5</key>
 		<string>https://github.com/tianling/Data_Structure.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>word_frequency_statistic/word_frequency_statistic/word_frequency_statistic.xcodeproj/project.xcworkspace</string>
+	<string>TheMaxChild_String/TheMaxChild_String.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>20679D74-18E5-46F1-B562-4D2FFE779FA5</key>
-		<string>../../../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/tianling/Data_Structure.git</string>

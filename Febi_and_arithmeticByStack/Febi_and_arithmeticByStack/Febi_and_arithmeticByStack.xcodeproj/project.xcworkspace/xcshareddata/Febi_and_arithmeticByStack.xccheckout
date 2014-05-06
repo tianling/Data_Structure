@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7DE13650-9E13-4B0E-ACAD-1EC6AF730215</string>
+	<string>7FF3F4BB-996F-4761-A66F-0E9B142C267D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Febi_and_arithmeticByStack</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>804DF930-0F5E-4F76-BD74-FFEA0F565003</key>
+		<key>20679D74-18E5-46F1-B562-4D2FFE779FA5</key>
 		<string>https://github.com/tianling/Data_Structure.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Febi_and_arithmeticByStack/Febi_and_arithmeticByStack/Febi_and_arithmeticByStack.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>804DF930-0F5E-4F76-BD74-FFEA0F565003</key>
+		<key>20679D74-18E5-46F1-B562-4D2FFE779FA5</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>804DF930-0F5E-4F76-BD74-FFEA0F565003</string>
+	<string>20679D74-18E5-46F1-B562-4D2FFE779FA5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>804DF930-0F5E-4F76-BD74-FFEA0F565003</string>
+			<string>20679D74-18E5-46F1-B562-4D2FFE779FA5</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Data_Structure</string>
 		</dict>
