@@ -15,6 +15,8 @@
 
 typedef int status;
 int NodeNum= 0,buildTime = 0;
+char dataArray[MaxSize];
+char *data = dataArray;
 
 /*
  **声明二叉树结点结构
@@ -27,19 +29,19 @@ typedef struct BiNode{
 /*
  **函数声明
  */
-void dataArrayGet(char *array);
-void BiTreeCreate(char *array,Bitree *T);
+void dataArrayGet();
+void BiTreeCreate(Bitree *T);
 void preOrderTraverse(Bitree T);
 status List();
 
 status main(int argc, const char * argv[])
 {
-    char dataArray[MaxSize];
+    
     Bitree Tree;
     int choose;
     
-    dataArrayGet(dataArray);
-    BiTreeCreate(dataArray,&Tree);
+    dataArrayGet();
+    BiTreeCreate(&Tree);
     choose = List();
     
     switch (choose) {
@@ -70,7 +72,7 @@ status List(){
 /*
  **获取待建树数据
  */
-void dataArrayGet(char *array){
+void dataArrayGet(){
     FILE *file;
     char temp;
     
@@ -80,12 +82,13 @@ void dataArrayGet(char *array){
     }
     
     while(fscanf(file, "%c",&temp) != EOF){
-        *array = temp;
-        array+=1;
+        *data = temp;
+        data+=1;
         NodeNum++;
     }
     
     fclose(file);
+    data -= NodeNum;
     
 }
 
@@ -93,13 +96,13 @@ void dataArrayGet(char *array){
 /*
  **建立二叉树
  */
-void BiTreeCreate(char *array,Bitree *T){
+void BiTreeCreate(Bitree *T){
 
-    while(buildTime<NodeNum){
+    if(buildTime<NodeNum){
         //若头结点值为空值，则二叉树为空树
-        if(*array == '#'){
+        if(*data == '#'){
             *T = NULL;
-            array++;
+            data++;
             buildTime++;
             
         }else{
@@ -108,16 +111,15 @@ void BiTreeCreate(char *array,Bitree *T){
             if(!*T)
                 exit(-1);
             
-            (*T)->data = *array;
-            array++;
+            (*T)->data = *data;
+            data++;
             buildTime++;
         
             //递归建立左子树和右子树(**其实就是按照前序遍历的规则啦**)
-            BiTreeCreate(array,&(*T)->lChild);
-            BiTreeCreate(array,&(*T)->rChild);
+            BiTreeCreate(&(*T)->lChild);
+            BiTreeCreate(&(*T)->rChild);
         }
     }
-    
     
 }
 
