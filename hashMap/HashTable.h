@@ -22,7 +22,7 @@
 
 #define SUCCESS 1
 #define UNSUCCESS 0
-#define HASHSIZE 12 //hash表长度
+#define HASHSIZE 13 //hash表长度
 #define NULLKEY -32768
 
 typedef int Status;
@@ -32,7 +32,12 @@ typedef struct{
     int count; //当前数据元素个数
 }HashTable;
 
-int m = 0;
+int m = 0;//散列表表长,全局变量
+int HASHP; //散列因子，全局变量
+
+Status InitHashTable(HashTable *h);
+int Hash(int key);
+
 
 
 
