@@ -94,7 +94,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_GNUtoMS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/threadPool
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/hashMap
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/MinGW/bin/ld.exe
@@ -192,12 +192,6 @@ hashMap_BINARY_DIR:STATIC=C:/Users/luoxinyu-xy/Documents/workspace/Data_Structur
 
 //Value Computed by CMake
 hashMap_SOURCE_DIR:STATIC=C:/Users/luoxinyu-xy/Documents/workspace/Data_Structure/hashMap
-
-//Value Computed by CMake
-threadPool_BINARY_DIR:STATIC=C:/Users/luoxinyu-xy/Documents/workspace/Data_Structure/hashMap/cmake-build-debug
-
-//Value Computed by CMake
-threadPool_SOURCE_DIR:STATIC=C:/Users/luoxinyu-xy/Documents/workspace/Data_Structure/hashMap
 
 
 ########################

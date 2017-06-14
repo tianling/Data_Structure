@@ -4,9 +4,7 @@ project(hashMap)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        HashMap.cpp
-        HashTable.h
-        )
+        HashTable.cpp
+        HashTable.h)
 
-
-
+add_executable(hashMap ${SOURCE_FILES})

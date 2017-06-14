@@ -37,6 +37,8 @@ int HASHP; //散列因子，全局变量
 
 Status InitHashTable(HashTable *h);
 int Hash(int key);
+void InsertHash(HashTable *h,int key);
+Status SearchHash(HashTable *h,int key,int *addr);
 
 
 

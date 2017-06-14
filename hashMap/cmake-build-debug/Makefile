@@ -55,17 +55,6 @@ CMAKE_BINARY_DIR = C:\Users\luoxinyu-xy\Documents\workspace\Data_Structure\hashM
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"D:\JetBrains\CLion 2016.3.2\bin\cmake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -76,6 +65,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	"D:\JetBrains\CLion 2016.3.2\bin\cmake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -109,14 +109,58 @@ depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named hashMap
+
+# Build rule for target.
+hashMap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 hashMap
+.PHONY : hashMap
+
+# fast build rule for target.
+hashMap/fast:
+	$(MAKE) -f CMakeFiles\hashMap.dir\build.make CMakeFiles/hashMap.dir/build
+.PHONY : hashMap/fast
+
+HashTable.obj: HashTable.cpp.obj
+
+.PHONY : HashTable.obj
+
+# target to build an object file
+HashTable.cpp.obj:
+	$(MAKE) -f CMakeFiles\hashMap.dir\build.make CMakeFiles/hashMap.dir/HashTable.cpp.obj
+.PHONY : HashTable.cpp.obj
+
+HashTable.i: HashTable.cpp.i
+
+.PHONY : HashTable.i
+
+# target to preprocess a source file
+HashTable.cpp.i:
+	$(MAKE) -f CMakeFiles\hashMap.dir\build.make CMakeFiles/hashMap.dir/HashTable.cpp.i
+.PHONY : HashTable.cpp.i
+
+HashTable.s: HashTable.cpp.s
+
+.PHONY : HashTable.s
+
+# target to generate assembly for a file
+HashTable.cpp.s:
+	$(MAKE) -f CMakeFiles\hashMap.dir\build.make CMakeFiles/hashMap.dir/HashTable.cpp.s
+.PHONY : HashTable.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... hashMap
+	@echo ... edit_cache
+	@echo ... HashTable.obj
+	@echo ... HashTable.i
+	@echo ... HashTable.s
 .PHONY : help
 
 
